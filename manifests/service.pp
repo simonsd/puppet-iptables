@@ -1,6 +1,6 @@
 class iptables::service {
 	service { "iptables":
-		ensure => running,
-		enable => true,
+		ensure => "$iptables_running",
+		enable => "$iptables_startup",
 	}
 }
