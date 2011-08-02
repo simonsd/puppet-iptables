@@ -4,9 +4,9 @@ import 'cobbler.pp'
 import 'config.pp'
 
 class iptables (
-	$running,
-	$startup,
-	$status
+	$running = 'running',
+	$startup = '1',
+	$status = 'present'
 ) {
 	include 'iptables::packages'
 	include 'iptables::service'
