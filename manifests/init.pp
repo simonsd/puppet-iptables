@@ -5,7 +5,7 @@ import 'config.pp'
 
 class iptables (
 	$running = 'running',
-	$startup = '1',
+	$startup = 'true',
 	$status = 'present'
 ) {
 	include 'iptables::packages'
