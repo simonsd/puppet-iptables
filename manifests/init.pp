@@ -6,11 +6,19 @@ import 'config.pp'
 class iptables (
 	$running = 'running',
 	$startup = 'true',
-	$status = 'present'
+	$status = 'present',
+	$stages = 'no'
 ) {
-	include 'iptables::packages'
-	include 'iptables::service'
-	include 'iptables::config'
-
-	Class['iptables::packages'] -> Class['iptables::config'] -> Class['iptables::service']
+	if $stages != 'yes' {
+		class{'iptables::packages':} -> class{'iptables::config':} -> class{'iptables::service':}
+	} else {
+		class {
+			'iptables::packages':
+				stage => depends;
+			'iptables::config':
+				stage => config;
+			'iptables::service':
+				stage => services;
+		}
+	}
 }
