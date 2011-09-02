@@ -10,7 +10,13 @@ class iptables (
 	$stages = 'no'
 ) {
 	if $stages != 'yes' {
-		class{'iptables::packages':} -> class{'iptables::config':} -> class{'iptables::service':}
+		class{
+			'iptables::packages':
+				before => Class['iptables::config'];
+			'iptables::config':
+				before => Class['iptables::service'];
+			'iptables::service':;
+		}
 	} else {
 		class {
 			'iptables::packages':
