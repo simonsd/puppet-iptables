@@ -27,4 +27,10 @@ class iptables (
 				stage => services;
 		}
 	}
+
+	if $::operatingsystem == archlinux {
+		Service {
+			path => '/etc/rc.d'
+		}
+	}
 }
