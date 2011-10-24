@@ -2,6 +2,7 @@ import 'packages.pp'
 import 'service.pp'
 import 'cobbler.pp'
 import 'config.pp'
+import 'definitions/*.pp'
 
 class iptables (
 	$running = 'running',
