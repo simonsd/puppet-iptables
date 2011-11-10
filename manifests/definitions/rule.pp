@@ -8,10 +8,10 @@ define iptables::rule (
 ) {
 	@exec {
 		"add_iptables_rule_$name":
-			command => "iptables -I $chain -t $table -p $proto --dport $dport -j $jump";
+			command => "/sbin/iptables -I $chain -t $table -p $proto --dport $dport -j $jump";
 
 		"remove_iptables_rule_$name":
-			command => "iptables -D $chain -t $table -p $proto --dport $dport -j $jump";
+			command => "/sbin/iptables -D $chain -t $table -p $proto --dport $dport -j $jump";
 	}
 
 	case $ensure {
