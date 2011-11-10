@@ -13,6 +13,7 @@ define iptables::rule (
 
 		"remove_iptables_rule_$name":
 			command => "/sbin/iptables -D $chain -t $table -p $proto --dport $dport -j $jump";
+#			onlyif => "/sbin/iptables -L|grep $proto|grep $dport|grep $jump";
 	}
 
 	case $ensure {
