@@ -1,8 +1,8 @@
 define iptables::rule (
 	$ensure = 'present',
 	$table = 'filter',
-	$chain,
-	$proto,
+	$chain = 'INPUT',
+	$proto = 'tcp',
 	$dport,
 	$jump = 'ACCEPT'
 ) {
