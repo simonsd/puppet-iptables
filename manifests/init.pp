@@ -17,10 +17,4 @@ class iptables (
 			before => Class['iptables::service'];
 		'iptables::service':;
 	}
-
-	if $::operatingsystem == archlinux {
-		Service {
-			path => '/etc/rc.d'
-		}
-	}
 }
