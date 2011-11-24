@@ -8,7 +8,11 @@ class iptables (
 	$running = 'running',
 	$startup = 'true',
 	$status = 'present',
-	$stages = 'no'
+	$stages = 'no',
+	$savefile = $::operatingsystem ? {
+		default => '/etc/sysconfig/iptables',
+		archlinux => '/etc/iptables/iptables.rules',
+	}
 ) {
 	if $stages != 'yes' {
 		class{

@@ -22,6 +22,12 @@ define iptables::rule (
 #			notify => Exec['save_iptables_rules'];
 	}
 
+	exec {
+		'save_iptables_rules':
+			command => "iptables-save > ${iptables::savefile}",
+			refreshonly => true;
+	}
+
 	case $ensure {
 		present: { realize(Exec["add_iptables_rule_$name"]) }
 		absent: { realize(Exec["remove_iptables_rule_$name"]) }
