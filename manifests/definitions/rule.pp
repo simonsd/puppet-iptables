@@ -13,7 +13,7 @@ define iptables::rule (
 #			notify => Exec['save_iptables_rules'];
 
 		"remove_iptables_rule_$name":
-			command => "/sbin/iptables -D $chain -t $table -p $proto --dport $dport -j $jump";
+			command => "/sbin/iptables -D $chain -t $table -p $proto --dport $dport -j $jump",
 			onlyif => "/sbin/iptables -L -n|grep $proto|grep $dport|grep $jump";
 #			notify => Exec['save_iptables_rules'];
 	}
