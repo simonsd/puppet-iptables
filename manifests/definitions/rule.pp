@@ -6,15 +6,19 @@ define iptables::rule (
 	$dport,
 	$jump = 'ACCEPT'
 ) {
+	Exec {
+		path => '/bin:/sbin:/usr/sbin'
+	}
+
 	@exec {
 		"add_iptables_rule_$name":
-			command => "/sbin/iptables -I $chain -t $table -p $proto --dport $dport -j $jump",
-			unless => "/sbin/iptables -L -n|grep $proto|grep $dport|grep $jump";
+			command => "iptables -I $chain -t $table -p $proto --dport $dport -j $jump",
+			unless => "iptables -L -n|grep $proto|grep $dport|grep $jump";
 #			notify => Exec['save_iptables_rules'];
 
 		"remove_iptables_rule_$name":
-			command => "/sbin/iptables -D $chain -t $table -p $proto --dport $dport -j $jump",
-			onlyif => "/sbin/iptables -L -n|grep $proto|grep $dport|grep $jump";
+			command => "iptables -D $chain -t $table -p $proto --dport $dport -j $jump",
+			onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump";
 #			notify => Exec['save_iptables_rules'];
 	}
 
