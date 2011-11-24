@@ -13,13 +13,13 @@ define iptables::rule (
 	@exec {
 		"add_iptables_rule_$name":
 			command => "iptables -I $chain -t $table -p $proto --dport $dport -j $jump",
-			unless => "iptables -L -n|grep $proto|grep $dport|grep $jump";
-#			notify => Exec['save_iptables_rules'];
+			unless => "iptables -L -n|grep $proto|grep $dport|grep $jump",
+			notify => Exec['save_iptables_rules'];
 
 		"remove_iptables_rule_$name":
 			command => "iptables -D $chain -t $table -p $proto --dport $dport -j $jump",
-			onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump";
-#			notify => Exec['save_iptables_rules'];
+			onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump",
+			notify => Exec['save_iptables_rules'];
 	}
 
 	exec {
