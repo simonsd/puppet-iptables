@@ -1,7 +1,4 @@
-import 'packages.pp'
-import 'service.pp'
-import 'cobbler.pp'
-import 'config.pp'
+import 'classes/*.pp'
 import 'definitions/*.pp'
 
 class iptables (
