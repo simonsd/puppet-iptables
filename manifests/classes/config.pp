@@ -15,7 +15,7 @@ class iptables::config {
 
 	exec {
 		'save_iptables_rules':
-			command => "iptables-save > ${iptables::savefile}",
+			command => "/sbin/iptables-save > ${iptables::savefile}",
 			refreshonly => true;
 	}
 }
