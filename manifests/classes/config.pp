@@ -12,4 +12,10 @@ class iptables::config {
 	if $::operatingsystem == 'debian' {
 		realize(File['iptables_initscript'])
 	}
-} 
+
+	exec {
+		'save_iptables_rules':
+			command => "iptables-save > ${iptables::savefile}",
+			refreshonly => true;
+	}
+}
