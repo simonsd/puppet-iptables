@@ -3,6 +3,7 @@ define iptables::rule (
 	$table = 'filter',
 	$chain = 'INPUT',
 	$proto = 'tcp',
+	$source = '0/0',
 	$dport,
 	$jump = 'ACCEPT'
 ) {
@@ -12,13 +13,13 @@ define iptables::rule (
 
 	@exec {
 		"add_iptables_rule_$name":
-			command => "iptables -I $chain -t $table -p $proto --dport $dport -j $jump",
-			unless => "iptables -L -n|grep $proto|grep $dport|grep $jump",
+			command => "iptables -I $chain -t $table -p $proto --dport $dport -s $source -j $jump",
+			unless => "iptables -L -n|grep $proto|grep $dport|grep $jump|grep $source",
 			notify => Exec['save_iptables_rules'];
 
 		"remove_iptables_rule_$name":
-			command => "iptables -D $chain -t $table -p $proto --dport $dport -j $jump",
-			onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump",
+			command => "iptables -D $chain -t $table -p $proto --dport $dport -s $source -j $jump",
+			onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump|grep $source",
 			notify => Exec['save_iptables_rules'];
 	}
 
