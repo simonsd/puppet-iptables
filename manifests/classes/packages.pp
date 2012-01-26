@@ -1,5 +1,5 @@
 class iptables::packages {
-	package {
-		'iptables':;
-	}
+  package {
+    'iptables':;
+  }
 }
