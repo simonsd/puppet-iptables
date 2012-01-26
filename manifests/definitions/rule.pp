@@ -15,12 +15,12 @@ define iptables::rule (
   @exec {
     "add_iptables_rule_$name":
       command => "iptables -I $chain -t $table -p $proto --dport $dport -d $destination -s $source -j $jump",
-      unless => "iptables -L -n|grep $proto|grep $dport|grep $jump|grep $source",
+      unless => "iptables -L -n|grep $proto|grep $dport|grep $jump|grep $source|grep $destination",
       notify => Exec['save_iptables_rules'];
 
     "remove_iptables_rule_$name":
       command => "iptables -D $chain -t $table -p $proto --dport $dport -d $destination -s $source -j $jump",
-      onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump|grep $source",
+      onlyif => "iptables -L -n|grep $proto|grep $dport|grep $jump|grep $source|grep $destination",
       notify => Exec['save_iptables_rules'];
   }
 
